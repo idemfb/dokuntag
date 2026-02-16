@@ -1,0 +1,40 @@
+name: AI Test & Fix
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-and-fix:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Vitest Tests
+        id: vitest
+        run: |
+          npx vitest run --reporter=json > vitest-results.json || true
+          
+      - name: Upload Vitest Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: vitest-results
+          path: vitest-results.json
+
+      - name: AI Analyze & Suggest Fixes
+        uses: repo-sync/github-actions@v2
+        with:
+          # Burada senin GitHub AI entegrasyonuna göre prompt veya komut eklenebilir
+          args: "ai-run vitest-results.json --generate-pr"
