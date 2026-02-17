@@ -1,8 +1,7 @@
 name: AI Test & Auto-Fix (Auto Merge)
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   vitest-ai-auto-fix:

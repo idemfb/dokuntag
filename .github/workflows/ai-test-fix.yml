@@ -1,11 +1,7 @@
 name: AI Test & Auto-Fix
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  workflow_dispatch:   # manuel başlatma seçeneği
+  workflow_dispatch:
 
 jobs:
   ai-test-fix:
@@ -28,8 +24,4 @@ jobs:
       - name: Parse test results & generate fix suggestions
         run: node .dokuntag-ai/scripts/parse-fix-report.js > fix-report.md
 
-      - name: AI Review & Auto-PR
-        uses: "ai/commit-assistant-action@v1"
-        with:
-          report-file: fix-report.md
-          auto-pr: true
+      # AI Review & Auto-PR adımı kaldırıldı
