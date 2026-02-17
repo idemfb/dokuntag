@@ -1,3 +1,0 @@
-module.exports=[33290,a=>{"use strict";var b=a.i(7997);function c({children:a}){return(0,b.jsx)("html",{lang:"tr",children:(0,b.jsx)("body",{className:"bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50",children:a})})}a.s(["default",()=>c,"metadata",0,{title:"Dokuntag - Loyalty System",description:"Turkish loyalty and rewards management system",icons:{icon:"/favicon.ico"}}])}];
-
-//# sourceMappingURL=app_layout_tsx_271801d7._.js.map
