@@ -1,0 +1,6 @@
+{
+  "tagCreated": "Tag oluşturuldu: {{uid}}",
+  "tagScanned": "Tag okutuldu: {{uid}}",
+  "tagAlreadyScanned": "Tag zaten okutulmuş: {{uid}}",
+  "tagNotFound": "Tag bulunamadı"
+}

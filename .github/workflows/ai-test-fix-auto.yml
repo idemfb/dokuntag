@@ -1,0 +1,58 @@
+name: AI Test & Auto-Fix (Auto Merge)
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  vitest-ai-auto-fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+
+    steps:
+      # 1️⃣ Repo'yu çek
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      # 2️⃣ Node.js kurulumu
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 3️⃣ Bağımlılıkları yükle
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4️⃣ Vitest testlerini çalıştır, JSON olarak kaydet
+      - name: Run Vitest Tests
+        id: run-tests
+        run: |
+          npx vitest run --reporter=json > vitest-results.json || true
+
+      # 5️⃣ Test sonuçlarını artifact olarak sakla
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: vitest-results
+          path: vitest-results.json
+
+      # 6️⃣ AI ile analiz et ve fixleri main branch’e uygula
+      - name: AI Analyze & Auto-Fix
+        uses: github/auto-gpt-action@v1
+        with:
+          prompt: |
+            Sen bir Node.js / Vitest / Prisma projesi asistanısın.
+            - vitest-results.json içindeki test hatalarını analiz et
+            - Eksik dosya ve importları oluştur
+            - Jest kodlarını Vitest’e uygun hâle getir
+            - Prisma foreign key ve DB hatalarını düzelt
+            - Kodları minimum değişiklikle çalışır hâle getir
+            - Hataları düzelttikten sonra main branch’e commit ve push yap
+          artifact_path: vitest-results.json
+          auto_commit: true
+          commit_message: "🤖 AI Auto-Fix: Test ve Prisma Hataları Düzeltilmiştir"
+          push_branch: main

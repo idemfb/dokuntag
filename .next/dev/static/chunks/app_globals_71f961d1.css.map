@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///workspaces/dokuntag/app/globals.css"],"sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nhtml {\n  scroll-behavior: smooth;\n}\n\nbody {\n  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n  line-height: 1.6;\n}\n\n/* Utility classes */\n.gradient-text {\n  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n  background-clip: text;\n}\n\n.gradient-bg {\n  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n}\n\n.card {\n  @apply bg-white dark:bg-slate-900 rounded-lg shadow p-4;\n}\n\n.card-dark {\n  @apply bg-slate-900 rounded-lg shadow-lg p-4;\n}\n"],"names":[],"mappings":"AAAA;;AACA;;AACA;;AAEA;;;;;;AAMA;;;;AAIA;;;;;AAMA;;;;;;;AAOA;;;;AAKE;;AAIA"}}]
+}

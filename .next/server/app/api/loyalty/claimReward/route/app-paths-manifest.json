@@ -1,0 +1,3 @@
+{
+  "/api/loyalty/claimReward/route": "app/api/loyalty/claimReward/route.js"
+}

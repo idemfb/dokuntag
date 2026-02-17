@@ -1,0 +1,75 @@
+name: AI Test & Auto-Fix (Safe Auto Merge)
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  vitest-ai-auto-fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+
+    steps:
+      # 1️⃣ Repo'yu çek
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      # 2️⃣ Node.js kurulumu
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 3️⃣ Bağımlılıkları yükle
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4️⃣ Vitest testlerini çalıştır, JSON olarak kaydet
+      - name: Run Vitest Tests
+        id: run-tests
+        run: |
+          npx vitest run --reporter=json > vitest-results.json || true
+
+      # 5️⃣ Test sonuçlarını artifact olarak sakla
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: vitest-results
+          path: vitest-results.json
+
+      # 6️⃣ AI ile testleri analiz et ve fix önerilerini uygula
+      - name: AI Analyze & Fix
+        id: ai-fix
+        uses: github/auto-gpt-action@v1
+        with:
+          prompt: |
+            Sen Node.js / Vitest / Prisma projesi için AI test asistanısın.
+            - vitest-results.json içindeki hataları analiz et
+            - Eksik dosya ve importları oluştur
+            - Jest kodlarını Vitest’e uygun hâle getir
+            - Prisma foreign key ve DB hatalarını düzelt
+            - Kodları minimum değişiklikle çalışır hâle getir
+            - Testleri geçmeden commit ve push yapma
+          artifact_path: vitest-results.json
+          auto_commit: true
+          commit_message: "🤖 AI Auto-Fix: Test ve Prisma Hataları Düzeltilmiştir"
+          push_branch: main
+
+      # 7️⃣ AI’nin fixlerinden sonra testleri tekrar çalıştır
+      - name: Run Tests After Fix
+        id: post-fix-tests
+        run: |
+          npx vitest run --reporter=json > post-fix-results.json || true
+
+      # 8️⃣ Test geçişini kontrol et
+      - name: Verify Tests Passed
+        run: |
+          FAILS=$(jq '.stats.failed' post-fix-results.json)
+          if [ "$FAILS" -gt 0 ]; then
+            echo "❌ Bazı testler hala başarısız. Commit main'e alınmayacak."
+            exit 1
+          fi
+          echo "✅ Tüm testler geçti. AI fix main branch'e push edildi."

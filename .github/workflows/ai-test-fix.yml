@@ -1,17 +1,17 @@
-name: AI Test & Fix
+name: AI Test & Auto-Fix
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:   # manuel başlatma seçeneği
 
 jobs:
-  test-and-fix:
+  ai-test-fix:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -19,22 +19,17 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Run Vitest Tests
-        id: vitest
-        run: |
-          npx vitest run --reporter=json > vitest-results.json || true
-          
-      - name: Upload Vitest Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: vitest-results
-          path: vitest-results.json
+      - name: Run tests & collect coverage
+        run: bash .dokuntag-ai/scripts/run-vitest.sh
 
-      - name: AI Analyze & Suggest Fixes
-        uses: repo-sync/github-actions@v2
+      - name: Parse test results & generate fix suggestions
+        run: node .dokuntag-ai/scripts/parse-fix-report.js > fix-report.md
+
+      - name: AI Review & Auto-PR
+        uses: "ai/commit-assistant-action@v1"
         with:
-          # Burada senin GitHub AI entegrasyonuna göre prompt veya komut eklenebilir
-          args: "ai-run vitest-results.json --generate-pr"
+          report-file: fix-report.md
+          auto-pr: true

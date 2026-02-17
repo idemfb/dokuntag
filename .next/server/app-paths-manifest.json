@@ -1,0 +1,22 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/admin/points/bulk-add/route": "app/api/admin/points/bulk-add/route.js",
+  "/api/admin/points/override/route": "app/api/admin/points/override/route.js",
+  "/api/admin/refund/route": "app/api/admin/refund/route.js",
+  "/api/admin/stats/route": "app/api/admin/stats/route.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/api/claim/route": "app/api/claim/route.js",
+  "/api/health/route": "app/api/health/route.js",
+  "/api/loyalty/addPoints/route": "app/api/loyalty/addPoints/route.js",
+  "/api/loyalty/claimReward/route": "app/api/loyalty/claimReward/route.js",
+  "/api/loyalty/points/route": "app/api/loyalty/points/route.js",
+  "/api/loyalty/refund/route": "app/api/loyalty/refund/route.js",
+  "/api/loyalty/rewards/route": "app/api/loyalty/rewards/route.js",
+  "/api/metrics/route": "app/api/metrics/route.js",
+  "/api/rewards/claim/route": "app/api/rewards/claim/route.js",
+  "/api/scan/route": "app/api/scan/route.js",
+  "/api/seed/route": "app/api/seed/route.js",
+  "/api/user/route": "app/api/user/route.js",
+  "/page": "app/page.js"
+}
