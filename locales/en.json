@@ -1,0 +1,6 @@
+{
+  "tagCreated": "Tag created: {{uid}}",
+  "tagScanned": "Tag scanned: {{uid}}",
+  "tagAlreadyScanned": "Tag already scanned: {{uid}}",
+  "tagNotFound": "Tag not found"
+}

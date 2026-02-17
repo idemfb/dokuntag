@@ -1,0 +1,22 @@
+node_modules
+cat >> .gitignore <<'EOF'
+
+# Next.js
+.next/
+out/
+
+# Prisma sqlite
+prisma/*.db
+prisma/*.db-journal
+dev.db
+dev.db-journal
+
+# Logs
+*.log
+vitest.log
+
+# Env (keep only example)
+.env
+.env.*
+!.env.example
+EOF

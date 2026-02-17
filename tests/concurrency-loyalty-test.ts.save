@@ -1,0 +1,35 @@
+import { randomUUID } from "crypto"
+
+const BASE_URL = "http://localhost:3000"
+const CONCURRENT_REQUESTS = 100
+
+const USER_ID = "test-user-id"
+const REWARD_ID = "test-reward-id"
+
+async function main() {
+/api/rewards/claim  console.log(`🚀 Starting ${CONCURRENT_REQUESTS} concurrent requests`)
+
+  const requests = Array.from({ length: CONCURRENT_REQUESTS }).map(() =>
+    fetch(`${BASE_URL}/api/loyalty/claimReward`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: USER_ID,
+        rewardId: REWARD_ID
+      }),
+    })
+  )
+
+  const responses = await Promise.all(requests)
+
+  const statuses = responses.map(r => r.status)
+
+  const success = statuses.filter(s => s === 200).length
+  const failed = statuses.length - success
+
+  console.log("---- RESULT ----")
+  console.log("✅ Success:", success)
+  console.log("❌ Failed:", failed)
+}
+
+main()

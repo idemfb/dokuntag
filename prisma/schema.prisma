@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model IdempotencyRecord {
+  id             String   @id @default(cuid())
+  userId         String
+  idempotencyKey String
+  createdAt      DateTime @default(now())
+
+  @@unique([userId, idempotencyKey])
+}
+
+model User {
+  id           String        @id
+  email        String        @unique
+  name         String
+  passwordHash String        // hashed with bcrypt
+  role         String        @default("user") // "user" or "admin"
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  loyaltyPoint LoyaltyPoint?
+  rewardClaims RewardClaim[]
+
+  @@index([email])
+}
+
+model Reward {
+  id         String        @id @default(cuid())
+  title      String
+  costPoints Int
+  active     Boolean       @default(true)
+  claims     RewardClaim[]
+}
+
+model RewardClaim {
+  id             String    @id @default(cuid())
+  userId         String
+  rewardId       String
+  idempotencyKey String    @unique
+  status         String    @default("claimed")
+  refundReason   String?   // 'user_request', 'admin_action', 'system_error', 'duplicate'
+  refundedAt     DateTime?
+  createdAt      DateTime  @default(now())
+  refundedBy     String?   // admin user id who processed refund
+  reward         Reward    @relation(fields: [rewardId], references: [id])
+  user           User      @relation(fields: [userId], references: [id])
+
+  @@unique([userId, rewardId])
+  @@unique([userId, idempotencyKey])
+  @@index([userId])
+  @@index([rewardId])
+  @@index([refundedAt])
+}
+
+model AuditLog {
+  id            String   @id @default(cuid())
+  action        String
+  userId        String
+  resourceType  String?
+  resourceId    String?
+  status        String
+  failureReason String?
+  changes       String?
+  metadata      String?
+  ipAddress     String?
+  userAgent     String?
+  createdAt     DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@index([resourceType, resourceId])
+}
+
+model LoyaltyPoint {
+  userId    String   @id
+  points    Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+}
