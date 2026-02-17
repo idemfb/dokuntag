@@ -22,7 +22,7 @@ export type AuditLogInput = {
   resourceType?: string
   resourceId?: string
 
-  // nullable fields (we may deliberately store null)
+  // nullable fields
   changes?: string | null
   metadata?: string | null
 
@@ -33,7 +33,7 @@ export type AuditLogInput = {
 
 /**
  * Remove keys with `undefined` values from an object.
- * This keeps `null` as-is (because Prisma accepts null for nullable fields).
+ * Keeps `null` as-is (Prisma accepts null for nullable fields).
  */
 function stripUndefined<T extends Record<string, any>>(obj: T): Partial<T> {
   const out: Partial<T> = {}
@@ -43,6 +43,9 @@ function stripUndefined<T extends Record<string, any>>(obj: T): Partial<T> {
   return out
 }
 
+/**
+ * Main writer (explicit name)
+ */
 export async function writeAuditLog(data: AuditLogInput) {
   try {
     const createData = stripUndefined({
@@ -50,14 +53,13 @@ export async function writeAuditLog(data: AuditLogInput) {
       userId: data.userId,
       status: data.status,
 
-      // optional strings: if undefined => removed; if string => kept
       resourceType: data.resourceType,
       resourceId: data.resourceId,
       failureReason: data.failureReason,
       ipAddress: data.ipAddress,
       userAgent: data.userAgent,
 
-      // nullable strings: allow null
+      // allow explicit null
       changes: data.changes ?? null,
       metadata: data.metadata ?? null,
     })
@@ -67,8 +69,14 @@ export async function writeAuditLog(data: AuditLogInput) {
     })
 
     return log
-  } catch (err) {
+  } catch {
     // audit log should never break main flow
     return null
   }
 }
+
+/**
+ * Backward-compatible export expected by other modules:
+ * import { auditLog } from '@/lib/audit'
+ */
+export const auditLog = writeAuditLog
