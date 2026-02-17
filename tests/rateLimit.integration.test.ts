@@ -1,5 +1,4 @@
-describe('Rate Limit (Redis)', () => {
-import { describe } from "vitest";
+import { describe, it, expect } from "vitest";
 
 const hasRedis = !!process.env.REDIS_URL;
 
