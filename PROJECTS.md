@@ -21,7 +21,7 @@ This registry tells a fresh chat where to recover active DOKUNTAG project contex
 - Current-state recovery: `AGENTS.md`, `README.md`, `BACKLOG.md`, and current Git working-tree/branch state.
 - Queue: `BACKLOG.md`
 - Resume example: "Studio'da devam edelim."
-- Note: when the repository reaches a safe clean checkpoint, prefer adding one concise dedicated current-state authority instead of relying on broad docs indefinitely.
+- Note: add one concise dedicated current-state authority with the next meaningful authorized Studio checkpoint; do not create a standalone docs-only push if it would trigger an unnecessary Vercel/preview/production cycle.
 - General-scan role: active social/creator operations and Studio product work.
 
 ### DOKUNTAG Apps

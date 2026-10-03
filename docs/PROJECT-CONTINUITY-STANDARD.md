@@ -160,6 +160,8 @@ Exceptions are deliberate:
 
 When equality cannot safely be achieved, record/report `SYNC_PENDING` with the reason and next action. The next relevant session checks it first.
 
+Do not create a docs-only project push solely to improve continuity when that push would trigger an unnecessary production/preview deploy or expensive validation. Keep the project unchanged/equal and attach the continuity-doc improvement to the next meaningful authorized project checkpoint instead; the shared registry must still provide a usable recovery route meanwhile.
+
 Do not force equality with reset, overwrite, force-push, unsafe pull, or by discarding user work.
 
 ## Relationship to Work Queue
