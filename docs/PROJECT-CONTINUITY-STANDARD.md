@@ -1,7 +1,7 @@
 # DOKUNTAG Project Continuity Standard
 
 Status: Active
-Version: 1.0
+Version: 1.1
 Approved by: Product Owner
 Effective date: 2026-10-03
 
@@ -54,6 +54,46 @@ After recovery, give the Product Owner a short orientation rather than a large c
 Then continue the requested work or discussion.
 
 A historical `HANDOFF_PROMPT.md` may remain as recovery material, but it is not the normal mechanism for moving to a new chat.
+
+## Project transition and chat guidance
+
+When the Product Owner finishes work in one project and starts another project in the same conversation, the agent should actively recommend whether to continue in the current chat or open a fresh chat. The Product Owner should not have to estimate context size or technical complexity manually.
+
+Prefer **the same chat** when the next work is small and bounded, for example:
+- a quick status check or factual question;
+- a small backlog/coordination update;
+- a short discussion or decision with little implementation context;
+- a low-risk change that can be understood and completed without loading a large new project context;
+- the current conversation remains focused and reasonably light.
+
+Prefer **a fresh chat** when the next work is materially independent or substantial, for example:
+- broad implementation, architecture, research, release, debugging, or multi-step work in a different project;
+- the new project requires many project-specific rules, files, or tools;
+- the current conversation already contains a large amount of another project's technical context;
+- carrying the old context creates a meaningful risk of project confusion, instruction leakage, or lower reasoning quality;
+- the outgoing project has reached a clean checkpoint and the next task is a natural independent work session.
+
+The recommendation should be short and useful, for example: `Studio checkpointi kapandı. Agent OS işi kapsamlı görünüyor; yeni sohbet açıp "Agent OS'a devam, şu işi yapalım" demen daha temiz olur.` No long handoff prompt is required.
+
+This is guidance, not a hard gate. If the Product Owner explicitly wants to stay in the same chat, continue safely unless a project-specific rule prevents it.
+
+Before an actual project switch, close the outgoing project's meaningful checkpoint when needed, then bootstrap the incoming project from its own durable sources. Do not carry the outgoing project's implementation assumptions into the incoming project merely because both were discussed in one chat.
+
+## Cross-project idea capture without switching context
+
+A short idea for another known project does **not** require switching the active project or opening a new chat.
+
+Example: while working in Studio, the Product Owner says `Bu arada Apps'te ileride uygulama içi şu özelliği ekleyelim.` The agent should keep Studio as the active work context and route the idea to the Apps work queue.
+
+Rules:
+- if the target project is clear, add the item to that project's `BACKLOG.md`, not `WORKSPACE-INBOX.md`;
+- use `LATER` for an undeveloped idea/experiment and `BATCH` for a wanted, understood, non-urgent task;
+- do not start implementing the other project merely because the idea was recorded;
+- use only the minimum target-project checks needed to record safely: identify the canonical repo, re-read the current backlog, and respect Git/sync/dirty-state rules;
+- if the target repo cannot be safely mutated because it is dirty, diverged, concurrently changing, or otherwise unsafe, preserve the idea temporarily in `WORKSPACE-INBOX.md` with the intended target project and move it later when safe;
+- tell the Product Owner briefly where the idea was recorded, then return to the active project.
+
+If the target project is not clear, use `WORKSPACE-INBOX.md` until ownership is decided.
 
 ## Chat-limit resilience
 
