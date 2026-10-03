@@ -1,7 +1,7 @@
 # DOKUNTAG Project Continuity Standard
 
 Status: Active
-Version: 1.1
+Version: 1.2
 Approved by: Product Owner
 Effective date: 2026-10-03
 
@@ -160,6 +160,27 @@ For requests such as "bugün DOKUNTAG için nereden başlayalım?", do not guess
 Use the active-focus set in `PROJECTS.md`. For each relevant active project, inspect only the minimum current-state authority, backlog, and Git/sync state needed to understand whether work is ready, blocked, waiting, or risky.
 
 Return a concise cross-project picture and a small set of sensible next actions. This scan is advisory: it does not authorize code, deploy, store, billing, secret, destructive, or cross-project mutations by itself.
+
+## Continuity health check
+
+Run a lightweight continuity health check opportunistically rather than on every chat turn. Good triggers include:
+- a general planning request such as `Bugün DOKUNTAG için nereden başlayalım?`;
+- resuming a project after a noticeable gap;
+- a project switch after substantial work;
+- any visible `SYNC_PENDING`, stale status date, unresolved waiting state, or coordination inconsistency;
+- an occasional maintenance pass when the active project set has changed.
+
+The health check should stay small and local-first. Verify only what is needed to answer:
+1. does the project registry still point to a valid canonical repo/current-state authority;
+2. is the current-state/status document materially stale or contradictory to Git/recent verified state;
+3. does `BACKLOG.md` contain completed, duplicate, stale, or wrongly classified items;
+4. are `BLOCKED`, `WAITING_OWNER`, or `AWAITING_RELEASE` items still valid and is their next condition clear;
+5. is there any hidden local/remote divergence or `SYNC_PENDING` that the next session should know about;
+6. can a fresh chat still resume the project without the previous conversation.
+
+Do not turn this into a full audit, build, deploy, web research pass, or cross-project mutation unless separately authorized. Fix safe documentation/queue hygiene when appropriate; otherwise surface the issue briefly and leave the project untouched.
+
+A healthy result normally needs no long report. It is enough to continue normally or mention a concise issue such as `Publish has one local-ahead checkpoint` or `Apps backlog contains a stale item` when it matters.
 
 ## Current-state authority rule
 
