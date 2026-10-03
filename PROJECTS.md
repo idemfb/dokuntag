@@ -34,13 +34,17 @@ This registry tells a fresh chat where to recover active DOKUNTAG project contex
 - General-scan role: active app portfolio, aftercare, store/release waiting states.
 
 ### DOKUNTAG Publish
-- Canonical GitHub project: `idemfb/dokuntag-publish`
-- Canonical local repository family: `C:\Users\user\dokuntag\repositories\dokuntag-publish`
-- Worktree selection: resolve through Git reconciliation; do not assume a legacy `publishPack` folder is the current source.
-- Current-state recovery in the selected safe worktree: `PROJECT_STATUS.md`, `docs\HANDOFF.md`, project rules, and `BACKLOG.md`.
-- Queue: root `BACKLOG.md` in the selected active/safe worktree.
-- Resume example: "Publish'e devam edelim."
-- General-scan role: active Hub/Publish/search/SEO/content work.
+- Web/Hub canonical GitHub project: `idemfb/dokuntag-publish`
+- Web/Hub canonical local repository family: `C:\Users\user\dokuntag\repositories\dokuntag-publish`
+- Web worktree selection: resolve through Git reconciliation; do not substitute the separate desktop PublishPack repo for web/Hub work.
+- Current-state recovery in the selected safe web worktree: `PROJECT_STATUS.md`, `docs\HANDOFF.md`, project rules, and `BACKLOG.md`.
+- Queue: root `BACKLOG.md` in the selected active/safe web worktree.
+- Desktop PublishPack canonical local repo: `C:\Users\user\dokuntag\publishPack`
+- Desktop PublishPack canonical GitHub backup: `idemfb/dokuntag-publishpack` (private).
+- PublishPack source backup intentionally excludes offline models/runtime, EXE/installers, `dist`, Rust/Tauri `target`, and other rebuildable caches.
+- PublishPack offline translation recovery assets are stored in the private GitHub release/tag `offline-assets-20261003` with manifest and SHA256 checksum.
+- Resume examples: "Publish'e devam edelim." / "PublishPack'e devam edelim."
+- General-scan role: active Hub/Publish/search/SEO/content work; inspect PublishPack only when the desktop product is named or relevant.
 
 ## Shared operations
 - Repo: `C:\Users\user\dokuntag\repositories\dokuntag`
