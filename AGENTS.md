@@ -15,6 +15,7 @@ It is not a product source repository and it is never a secrets store.
 2. Read the runbook relevant to the requested external service.
 3. If the local DOKUNTAG workspace is available, obey its root `AGENTS.md`, `AI-BOOTSTRAP.md`, repository-sync standard, and target-product rules.
 4. Keep product-specific implementation and release decisions in the product repository.
+5. For cross-project continuation or a fresh-chat resume, read `docs/PROJECT-CONTINUITY-STANDARD.md` and `PROJECTS.md`. Use `WORKSPACE-INBOX.md` only for unassigned cross-project items.
 
 ## Safety
 

@@ -10,5 +10,8 @@ Current shared integration:
 
 Cross-product work coordination:
 - `docs/WORK-QUEUE-STANDARD.md`
+- `docs/PROJECT-CONTINUITY-STANDARD.md`
+- `PROJECTS.md`
+- `WORKSPACE-INBOX.md`
 
 No credentials or private tokens belong in this repository.
